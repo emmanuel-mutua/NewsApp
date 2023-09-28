@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -6,6 +9,9 @@ plugins {
 }
 
 android {
+    buildFeatures {
+        buildConfig = true
+    }
     namespace = "com.samkt.asternews"
     compileSdk = 34
 
@@ -20,6 +26,12 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        val someExtraProperty = Properties()
+        someExtraProperty.load(FileInputStream(rootProject.file("local.properties")))
+        val apiKey = someExtraProperty["API_KEY"].toString()
+
+        buildConfigField("String", "API_KEY", apiKey)
     }
 
     buildTypes {
@@ -88,6 +100,6 @@ dependencies {
     implementation("io.coil-kt:coil:2.4.0")
     implementation("io.coil-kt:coil-compose:2.4.0")
 
-    //Timber
+    // Timber
     implementation("com.jakewharton.timber:timber:5.0.1")
 }
