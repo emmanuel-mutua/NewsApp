@@ -16,6 +16,6 @@ interface AsterNewsApiService {
     suspend fun getArticlesOnCategory(
         @Query("apiKey") apiKey: String = BuildConfig.API_KEY,
         @Query("lang") lang: String = "eng",
-        @Query("keyword") keyword: String,
+        @Query("keyword") keyword: String? = null,
     ): AllArticles
 }

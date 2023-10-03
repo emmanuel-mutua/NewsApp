@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -33,21 +32,23 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.samkt.asternews.data.asterNewsDtos.Result
+import com.samkt.asternews.data.asterNewsDtos.AllArticles
 
 @Composable
 fun ArticlesCard(
-    results: Result,
+    allArticles: AllArticles,
+    index: Int,
     onCardClick: () -> Unit,
     onClickShareButton: (title: String, body: String) -> Unit,
 ) {
+    val results = allArticles.articles.results[index]
     Card(
         modifier = Modifier
             .padding(20.dp)
             .clickable {
                 onCardClick()
             },
-        shape = MaterialTheme.shapes.medium
+        shape = MaterialTheme.shapes.medium,
     ) {
         Column(
             modifier = Modifier.padding(20.dp),
@@ -110,7 +111,7 @@ fun ArticlesCard(
                 IconButton(
                     onClick = {
                         onClickShareButton(
-                             results.title,
+                            results.title,
                             results.body,
                         )
                     },
